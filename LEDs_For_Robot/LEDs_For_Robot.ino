@@ -17,6 +17,7 @@
 //Delay for each cycle of random colors.
 int dly = 10; //Adjust to your liking, Default: 10
 int tdly = 250;
+int pdly = 100;
 //Brightness
 int brightness = 255;
 //Seconds Count
@@ -27,8 +28,17 @@ int b = 0;
 int c = 0;
 int d = 0;
 int e = 0;
+int f = 0;
 //Create timer
 Timer t;
+//Random Number
+int rnum = 0;
+//pulse
+int pled = 0;
+int pled1 = 0;
+int pled2 = 0;
+int pled3 = 0;
+int pled4 = 0;
 
 
 
@@ -104,10 +114,17 @@ void loop()
  if(cycle > 15 && cycle <= 30){
     randAllColor();
   }
- //Reset Cycle Count at End of Functions: After 30sec Actually 15
+ //Run Function 3: 15sec
+ // if(cycle > 30 && cycle <= 45){
+   // tjColors();
+ // }
+  //Reset cycle
   if(cycle > 30){
-    cycle = 0;
+ 
+  cycle = 0;
+    
   }
+  
   
  
   
@@ -134,17 +151,38 @@ void randColor(){
 void randAllColor(){
   //Randomly Flashes Color on Each LED
   //While Loop
+  rnum = random(50,256);
   b = 0;
  while(b < NUM_LEDS){
- 	leds[b] = CHSV(random(50,256),255,brightness);
+ 	leds[b] = CHSV(rnum,255,brightness);
  	//Wait
  	delay(dly);
  	//Write to LED Strip
  	FastLED.show();
  	b++;
  }
- 
+ pulseLeds();
 }
+
+/*
+void tjColors(){
+  f = 0;
+  while(f < NUM_LEDS){
+    leds[f] = CHSV(64,255,brightness);
+    FastLED.show();
+    f++;
+    leds[f] = CHSV(32,255,brightness);
+    FastLED.show();
+    f++;
+    leds[f] = CHSV(224,255,brightness);
+    FastLED.show();
+    f++;
+    leds[f] = CHSV(192,255,brightness);
+    FastLED.show();
+    f++;
+  }
+}
+*/
 
  void testRed(){
  c = 0;
@@ -180,6 +218,43 @@ void randAllColor(){
   }
     FastLED.show();
    delay(tdly);
+ }
+ 
+ void pulseLeds(){
+   pled = brightness;
+   FastLED.setBrightness(pled);
+   FastLED.show();
+   delay(pdly);
+   pled1 = pled-(pled/4);
+   FastLED.setBrightness(pled1);
+   FastLED.show();
+   delay(pdly);
+   pled2 = pled1-(pled1/4);
+   FastLED.setBrightness(pled2);
+   FastLED.show();
+   delay(pdly);
+   pled3 = pled2-(pled2/4);
+   FastLED.setBrightness(pled3);
+   FastLED.show();
+   delay(pdly);
+   pled4 = pled3-(pled3/4);
+   FastLED.setBrightness(pled4);
+   FastLED.show();
+   delay(pdly);
+   FastLED.setBrightness(pled3);
+   FastLED.show();
+   delay(pdly);
+   FastLED.setBrightness(pled2);
+   FastLED.show();
+   delay(pdly);
+   FastLED.setBrightness(pled1);
+   FastLED.show();
+   delay(pdly);
+   FastLED.setBrightness(pled);
+   FastLED.show();
+   delay(pdly);
+   
+   
  }
    
    
