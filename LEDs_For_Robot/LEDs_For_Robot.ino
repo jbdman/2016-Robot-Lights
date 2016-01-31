@@ -1,5 +1,6 @@
 //The best library for cross-chipset compatibility
 #include "FastLED.h"
+#include "Timer.h"
 
 // How many leds in your strip?
 #define NUM_LEDS 7
@@ -13,9 +14,16 @@
 //Clock
 #define CLOCK_PIN 3
 
+//Delay for each cycle of random colors.
+int dly = 10; //Adjust to your liking, Default: 10
 //Brightness
 int brightness = 100;
+//Seconds Count
 int cycle = 0;
+//Used in While loop
+int i = 0;
+//Create timer
+Timer t;
 
 
 
@@ -61,7 +69,10 @@ void setup()
         }
         //Set Brightness
         FastLED.setBrightness(brightness);
-        //Serial.begin(9600);
+        //Increment Seconds Count
+        t.every(1000,incCycle);
+        //Serial
+        Serial.begin(9600);
         
 
 
@@ -70,38 +81,51 @@ void setup()
 
 void loop()
 {
-  
-  delay(1);
- //Increase Cycle Counter 
-  cycle = cycle++;
+
+//Update seconds count	
+  t.update();
+
  //Run Function 1: 15sec 
-  if(cycle <= 1500){
+  if(cycle <= 15){
   randColor();
   }
  //Run Function 2: 15sec  
-  if(cycle > 1500 && cycle <= 3000){
+  if(cycle > 15 && cycle <= 30){
+    //Print Seconds as a place holder for next pattern
+    Serial.print(cycle);
   }
  //Reset Cycle Count at End of Functions: After 30sec
-  if(cycle > 3000){
+  if(cycle > 30){
     cycle = 0;
   }
+  
+ 
   
   }
   
   
 void randColor(){
   //Randomly Flashes Color on Each LED
-  //For Loop :) , ... I finnaly understand them.
-    for(int i = 0; i < NUM_LEDS; i++){
-     //Write random R,G,B Values between 50 and 255
-    leds[i] = CHSV( random(50,256), random(50,256), random(50,256));
-    //Wait
-    delay(10);
-    //Write to LED Strip
-    FastLED.show();
-  }
-  
+  //While Loop
+  i = 0;
+ while(i < NUM_LEDS){
+ 	leds[i] = CHSV( random(50,256), random(50,256), random(50,256));
+ 	//Wait
+ 	delay(dly);
+ 	//Write to LED Strip
+ 	FastLED.show();
+ 	i++;
+ }
+ 
 }
+
+  
+//Seconds Incrementer  
+void incCycle() 
+{
+  cycle++;
+}
+
   
   
   
