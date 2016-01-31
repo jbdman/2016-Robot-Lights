@@ -16,14 +16,20 @@
 
 //Delay for each cycle of random colors.
 int dly = 10; //Adjust to your liking, Default: 10
+int tdly = 250;
 //Brightness
-int brightness = 100;
+int brightness = 255;
 //Seconds Count
 int cycle = 0;
 //Used in While loop
-int i = 0;
+int a = 0;
+int b = 0;
+int c = 0;
+int d = 0;
+int e = 0;
 //Create timer
 Timer t;
+
 
 
 
@@ -69,6 +75,11 @@ void setup()
         }
         //Set Brightness
         FastLED.setBrightness(brightness);
+        //Test Lights
+        testRed();
+        testGreen();
+        testBlue();
+        
         //Increment Seconds Count
         t.every(1000,incCycle);
         //Serial
@@ -90,11 +101,10 @@ void loop()
   randColor();
   }
  //Run Function 2: 15sec  
-  if(cycle > 15 && cycle <= 30){
-    //Print Seconds as a place holder for next pattern
-    Serial.print(cycle);
+ if(cycle > 15 && cycle <= 30){
+    randAllColor();
   }
- //Reset Cycle Count at End of Functions: After 30sec
+ //Reset Cycle Count at End of Functions: After 30sec Actually 15
   if(cycle > 30){
     cycle = 0;
   }
@@ -107,18 +117,76 @@ void loop()
 void randColor(){
   //Randomly Flashes Color on Each LED
   //While Loop
-  i = 0;
- while(i < NUM_LEDS){
- 	leds[i] = CHSV( random(50,256), random(50,256), random(50,256));
+  a = 0;
+ while(a < NUM_LEDS){
+ 	leds[a] = CHSV( random(50,256), 255, brightness);
  	//Wait
  	delay(dly);
  	//Write to LED Strip
  	FastLED.show();
- 	i++;
+ 	a++;
  }
  
 }
 
+
+
+void randAllColor(){
+  //Randomly Flashes Color on Each LED
+  //While Loop
+  b = 0;
+ while(b < NUM_LEDS){
+ 	leds[b] = CHSV(random(50,256),255,brightness);
+ 	//Wait
+ 	delay(dly);
+ 	//Write to LED Strip
+ 	FastLED.show();
+ 	b++;
+ }
+ 
+}
+
+ void testRed(){
+ c = 0;
+ while(c < NUM_LEDS){
+    leds[c].setRGB(255,0,0);
+    //FastLED.show();
+    c++;
+
+ }
+    FastLED.show();
+   delay(tdly);
+ }
+ 
+ 
+ void testGreen(){
+   d = 0;
+ while( d < NUM_LEDS ){  
+    leds[d].setRGB(0,255,0);
+    d++;
+    //FastLED.show();
+  }
+    FastLED.show();
+   delay(tdly);
+ }
+ 
+ 
+ void testBlue(){
+   e = 0;
+ while( e < NUM_LEDS ){  
+    leds[e].setRGB(0,0,255);
+    e++;
+    //FastLED.show();
+  }
+    FastLED.show();
+   delay(tdly);
+ }
+   
+   
+ 
+ 
+
+  
   
 //Seconds Incrementer  
 void incCycle() 
