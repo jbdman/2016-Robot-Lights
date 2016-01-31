@@ -15,6 +15,7 @@
 
 //Brightness
 int brightness = 100;
+int cycle = 0;
 
 
 
@@ -74,14 +75,14 @@ void loop()
  //Increase Cycle Counter 
   cycle = cycle++;
  //Run Function 1: 15sec 
-  if(cycle <= 15000){
+  if(cycle <= 1500){
   randColor();
   }
  //Run Function 2: 15sec  
-  if(cycle > 15000 && cycle <= 30000){
+  if(cycle > 1500 && cycle <= 3000){
   }
  //Reset Cycle Count at End of Functions: After 30sec
-  if(cycle > 30000){
+  if(cycle > 3000){
     cycle = 0;
   }
   
