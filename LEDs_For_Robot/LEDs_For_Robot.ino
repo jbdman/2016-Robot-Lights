@@ -29,6 +29,8 @@ boolean direction = FORWARD;
 int dly = 10; //Adjust to your liking, Default: 10
 int tdly = 250;
 int pdly = 100;
+int greenDLY = 50;
+
 //Brightness
 int brightness = 255;
 //Seconds Count
@@ -120,18 +122,22 @@ void loop()
  //Run Function 1: 15sec 
   if(cycle <= 15){
   randColor();
+  //scamTheGreen();
   }
  //Run Function 2: 15sec  
  if(cycle > 15 && cycle <= 30){
     randAllColor();
     pulseLeds();
+    scamTheGreen();
   }
    if(cycle > 30 && cycle <= 45){
     randColor();
     pulseLeds();
+    scamTheGreen();
   }
   if(cycle > 45 && cycle <= 60){
     randAllColor();
+    //scamTheGreen();
   }
  //Run Function 3: 15sec
  // if(cycle > 30 && cycle <= 45){
@@ -224,6 +230,18 @@ void tjColors(){
   }
     FastLED.show();
    delay(tdly);
+ }
+ 
+ 
+  void scamTheGreen(){
+   d = 0;
+ while( d < NUM_LEDS ){  
+    leds[d].setRGB(0,255,0);
+    d++;
+    //FastLED.show();
+  }
+    FastLED.show();
+   delay(greenDLY);
  }
  
  
